@@ -1,0 +1,221 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #ffffff;
+    color: #000000;
+    font-family: 'Kalam', cursive;
+}
+
+/* Layers */
+#storm-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none; /* Let clicks pass through to canvas if needed */
+}
+
+#host-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid #000;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Loading Screen */
+#loading-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+#loading-screen.active {
+    display: flex;
+}
+
+#loading-screen h1 {
+    font-size: 6rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+#loading-screen p {
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.loading-bar {
+    width: 400px;
+    height: 4px;
+    background: #eee;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-fill {
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 50%;
+    height: 100%;
+    background: #000;
+    animation: loadAnim 2s infinite ease-in-out;
+}
+
+@keyframes loadAnim {
+    0% { left: -50%; }
+    100% { left: 100%; }
+}
+
+/* Main UI Overlay */
+#main-ui {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#tech-text {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: #000000;
+    left: 150%; /* Start offscreen right */
+    transform: translateX(-50%);
+    transition: left 800ms ease-out;
+    white-space: nowrap;
+}
+
+#tech-text.revealed {
+    left: 50%; /* Center horizontally */
+}
+
+#credit-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-style: italic;
+    color: #000000;
+    opacity: 0;
+    transition: opacity 700ms ease-in;
+    white-space: nowrap;
+}
+
+#credit-line.revealed {
+    opacity: 1;
+}
+
+#buffer-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: #555;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+/* Leaderboard Panel */
+#leaderboard-panel {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    transform: translateY(-50%);
+    width: 250px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #000;
+    padding: 20px;
+    border-radius: 8px;
+    transition: opacity 300ms ease;
+}
+
+#leaderboard-panel h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 5px;
+}
+
+.lb-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.lb-score {
+    font-weight: 700;
+}
+
+/* Host Controls Buttons */
+#host-controls button {
+    font-family: 'Kalam', cursive;
+    background: #fff;
+    border: 1px solid #000;
+    padding: 8px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+#host-controls button:hover {
+    background: #f0f0f0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Manual Input */
+#manual-input {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    font-family: 'Kalam', cursive;
+    border: 1px solid #000;
+    padding: 5px;
+    background: #fff;
+}
+
+#manual-input.active {
+    opacity: 1;
+    pointer-events: auto;
+}

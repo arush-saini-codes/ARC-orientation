@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARC × Tech - Live Word-Storm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="projector.css">
+</head>
+<body>
+    <!-- Layer 1: Canvas (z-index: 1) -->
+    <canvas id="storm-canvas"></canvas>
+
+    <!-- Layer 2: UI Overlay (z-index: 2) -->
+    <div id="ui-overlay">
+        <!-- LOADING Phase -->
+        <div id="loading-screen" class="active">
+            <h1>ARC × Tech</h1>
+            <p>Scan to join the Word-Storm!</p>
+            <div id="qr-code" style="width: 220px; height: 220px; margin: 20px auto 0 auto; display: block; background: white;"></div>
+            <p id="url-display" style="margin-top:15px; font-size:1.5rem; font-family: 'Kalam', cursive;"></p>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+        </div>
+
+        <!-- STORM/REVEAL Phases -->
+        <div id="main-ui">
+            <!-- Settles to these elements -->
+            <div id="arc-text"></div> <!-- We might not need actual DOM text for ARC since words form it, but a glow effect container can go here if needed. Actually we'll draw it on canvas, but let's keep it for any DOM overlay fx -->
+            <div id="tech-text">TECH</div>
+            <div id="credit-line">by your dear Tech Lead ✦</div>
+            
+            <div id="leaderboard-panel" class="hidden">
+                <h2>Top 8 Players</h2>
+                <div id="leaderboard-list"></div>
+            </div>
+            
+            <div id="buffer-message" class="hidden">Collecting words...</div>
+        </div>
+    </div>
+
+    <!-- Layer 3: Host Controls (z-index: 10) -->
+    <div id="host-controls">
+        <button id="btn-start">Start Storm</button>
+        <div id="lb-toggle-container" class="hidden">
+            <label><input type="checkbox" id="toggle-lb"> Leaderboard</label>
+        </div>
+    </div>
+
+    <!-- Hidden Manual Input -->
+    <input type="text" id="manual-input" placeholder="Inject word..." autocomplete="off">
+
+    <script src="projector.js"></script>
+</body>
+</html>

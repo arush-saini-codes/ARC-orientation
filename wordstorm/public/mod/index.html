@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARC × Tech - Moderator Panel</title>
+    <link rel="stylesheet" href="mod.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Moderator Panel</h1>
+        <button id="flow-btn" class="flow-btn">▶ Flow Words</button>
+    </div>
+
+    <div class="container">
+        <!-- Reveal Controls -->
+        <div class="panel reveal-panel">
+            <h2>REVEAL CONTROLS</h2>
+            <div style="display:flex; gap: 10px;">
+                <button id="btn-mod-reveal-tech" class="reveal-btn">🎯 Reveal TECH</button>
+                <button id="btn-mod-show-credit" class="reveal-btn" disabled>✨ Show Credit</button>
+            </div>
+        </div>
+
+        <!-- Live Feed -->
+        <div class="panel feed-panel">
+            <h2>Live Feed</h2>
+            <div id="feed-list" class="list-container">
+                <!-- Feed rows injected here -->
+            </div>
+        </div>
+
+        <!-- Player List -->
+        <div class="panel player-panel">
+            <h2>Players</h2>
+            <div id="player-list" class="list-container">
+                <!-- Player rows injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="mod.js"></script>
+</body>
+</html>

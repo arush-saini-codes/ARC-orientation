@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ARC × Tech</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="player.css">
+</head>
+<body>
+
+    <!-- Screen 1: Name Entry -->
+    <div id="screen-1" class="screen active">
+        <div class="card">
+            <h1>ARC × Tech</h1>
+            <p class="subtitle">What does TECH mean to you?</p>
+            <form id="register-form">
+                <input type="text" id="name-input" placeholder="Enter your name" required minlength="2" maxlength="40" autocomplete="off">
+                <p id="register-error" class="error"></p>
+                <button type="submit">Get My Number &rarr;</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Screen 2: Serial Display -->
+    <div id="screen-2" class="screen">
+        <div class="card">
+            <h2 id="serial-display">You are ARC-XXX</h2>
+            <p>Remember your number!</p>
+        </div>
+    </div>
+
+    <!-- Screen 3: Word Submission -->
+    <div id="screen-3" class="screen">
+        <div class="top-bar">
+            <span class="badge" id="badge-serial">ARC-XXX</span>
+            <span id="re-register" class="re-register-link">Not ARC-XXX? Tap to re-register</span>
+        </div>
+        
+        <div class="prompt-area">
+            <p class="main-prompt">What comes to mind when you think of TECH?</p>
+            <p class="sub-prompt">Keep sending — one word at a time. As many as you can!</p>
+        </div>
+
+        <div class="chat-area" id="chat-area">
+            <!-- Bubbles will go here -->
+        </div>
+
+        <div class="input-area">
+            <form id="word-form">
+                <input type="text" id="word-input" placeholder="Type a word..." required minlength="2" maxlength="20" autocomplete="off">
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="player.js"></script>
+</body>
+</html>
