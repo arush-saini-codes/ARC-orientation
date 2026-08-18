@@ -87,7 +87,7 @@ function registerPlayer(name) {
     const result = countPlayersStmt.get();
     const nextNumber = result.count + 1;
     const serial = `ARC-${nextNumber.toString().padStart(3, '0')}`;
-    
+
     insertPlayerStmt.run(serial, name, Date.now());
     return { serial, name };
   });

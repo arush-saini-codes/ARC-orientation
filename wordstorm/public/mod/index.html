@@ -4,39 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARC × Tech - Moderator Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="mod.css">
 </head>
 <body>
-    <div class="header">
-        <h1>Moderator Panel</h1>
-        <button id="flow-btn" class="flow-btn">▶ Flow Words</button>
+    <div id="pin-screen" style="
+      position: fixed; inset: 0; background: #ffffff;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-family: 'Kalam', cursive; z-index: 9999;
+    ">
+      <h1 style="font-size: 2rem; margin-bottom: 8px;">Moderator Access</h1>
+      <p style="margin-bottom: 24px; color: #555;">Enter PIN to continue</p>
+      <input id="pin-input" type="password" maxlength="4"
+        placeholder="····"
+        style="
+          font-size: 2rem; text-align: center; letter-spacing: 12px;
+          width: 160px; padding: 12px; border: 2px solid #000;
+          border-radius: 8px; margin-bottom: 16px;
+          font-family: 'Kalam', cursive;
+        "
+      />
+      <button id="pin-submit" style="
+        padding: 12px 32px; font-size: 1.1rem;
+        background: #000; color: #fff; border: none;
+        border-radius: 6px; cursor: pointer;
+        font-family: 'Kalam', cursive;
+      ">Enter</button>
+      <p id="pin-error" style="color: red; margin-top: 12px; display: none;">
+        Wrong PIN. Try again.
+      </p>
     </div>
 
-    <div class="container">
-        <!-- Reveal Controls -->
-        <div class="panel reveal-panel">
-            <h2>REVEAL CONTROLS</h2>
-            <div style="display:flex; gap: 10px;">
-                <button id="btn-mod-reveal-tech" class="reveal-btn">🎯 Reveal TECH</button>
-                <button id="btn-mod-show-credit" class="reveal-btn" disabled>✨ Show Credit</button>
-            </div>
+    <div id="main-panel" style="display: none; height: 100vh; display: flex; flex-direction: column;">
+        <!-- TOP COMPACT BAR — single row, full width -->
+        <div id="top-bar">
+          <!-- Left group: reveal buttons compact -->
+          <button id="btn-reveal-tech" class="btn-reveal">🎯 Reveal TECH</button>
+          <button id="btn-show-credit" class="btn-credit" disabled>✨ Credit</button>
+          
+          <!-- Divider -->
+          <div class="bar-divider"></div>
+          
+          <!-- Center: contest toggle compact -->
+          <button id="contest-toggle" class="contest-open-compact">
+            🟢 OPEN
+          </button>
+          
+          <!-- Divider -->
+          <div class="bar-divider"></div>
+          
+          <!-- Right group: live stats inline -->
+          <span class="stat">👥 <span id="stat-players">0</span></span>
+          <span class="stat">✅ <span id="stat-words">0</span></span>
+          <span class="stat">🚫 <span id="stat-struck">0</span></span>
+          <span class="stat">📈 <span id="stat-rate">0</span>/m</span>
+          
+          <!-- Far right: leaderboard button -->
+          <button id="btn-leaderboard" class="btn-leaderboard">🏆</button>
         </div>
 
-        <!-- Live Feed -->
-        <div class="panel feed-panel">
-            <h2>Live Feed</h2>
-            <div id="feed-list" class="list-container">
-                <!-- Feed rows injected here -->
+        <!-- THREE PANELS — take up all remaining height -->
+        <div id="panels">
+          <div id="panel-feed">
+            <div class="panel-header">
+              Live Feed
+              <input id="feed-search" placeholder="Search...">
+              <label><input type="checkbox" id="autoscroll" checked> Auto</label>
+              <button id="strike-selected">Strike Selected</button>
             </div>
+            <div id="feed-list"></div>
+          </div>
+          
+          <div id="panel-players">
+            <div class="panel-header">
+              Players (<span id="player-count">0</span>)
+              <input id="player-search" placeholder="Search...">
+              <select id="player-sort">
+                <option value="words">By Words</option>
+                <option value="name">By Name</option>
+                <option value="time">By Time</option>
+              </select>
+            </div>
+            <div id="player-list"></div>
+          </div>
+          
+          <div id="panel-flagged">
+            <div class="panel-header">⚑ Flagged</div>
+            <div id="flagged-list"></div>
+          </div>
         </div>
 
-        <!-- Player List -->
-        <div class="panel player-panel">
-            <h2>Players</h2>
-            <div id="player-list" class="list-container">
-                <!-- Player rows injected here -->
-            </div>
+        <!-- BOTTOM BAR -->
+        <div id="bottom-bar">
+          <button id="flow-toggle">▶ Flow Words</button>
+          <span id="flow-speed">0 words/min</span>
+          <button id="clear-system">🗑 Clear System</button>
         </div>
+    </div>
+
+    <!-- LEADERBOARD OVERLAY -->
+    <div id="leaderboard-overlay">
+      <div class="lb-inner">
+        <h1 class="lb-title">🏆 Prize Leaderboard</h1>
+        <div id="lb-podium" class="lb-podium"></div>
+        <div id="lb-rest" class="lb-rest"></div>
+        <div class="lb-actions">
+          <button id="lb-refresh" class="lb-refresh">Refresh</button>
+          <button id="lb-close" class="lb-close">Close</button>
+        </div>
+      </div>
     </div>
 
     <script src="mod.js"></script>

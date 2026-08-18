@@ -728,40 +728,20 @@ async function initQR() {
     const qrDiv = document.getElementById('qr-code');
     if (!urlDisplay || !qrDiv) return;
     
-    let playerUrl = window.location.origin + '/player/';
-    let ngrokFound = false;
-    
-    try {
-        const res = await fetch('/api/qr-url');
-        if (res.ok) {
-            const data = await res.json();
-            if (data.playerUrl) {
-                playerUrl = data.playerUrl;
-                // If it's not localhost, we assume ngrok worked via backend
-                if (!playerUrl.includes('localhost')) {
-                    ngrokFound = true;
-                }
-            }
-        }
-    } catch (e) {
-        // failed
-    }
-    
+    const INTRANET_URL = 'http://172.31.3.109:4521/player/';
+    const finalUrl = INTRANET_URL;
+
     qrDiv.innerHTML = '';
     
-    if (ngrokFound) {
-        new QRCode(qrDiv, {
-            text: playerUrl,
-            width: 220,
-            height: 220,
-            colorDark: '#000000',
-            colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.H
-        });
-        urlDisplay.textContent = playerUrl;
-    } else {
-        urlDisplay.innerHTML = `${playerUrl}<br><span style="font-size:1rem; color:#666;">ngrok not detected - showing local URL</span>`;
-    }
+    new QRCode(qrDiv, {
+        text: finalUrl,
+        width: 220,
+        height: 220,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+    });
+    urlDisplay.textContent = finalUrl;
 }
 
 // Start

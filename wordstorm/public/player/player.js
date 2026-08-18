@@ -24,25 +24,43 @@ function showScreen(index) {
 }
 
 // Initialization
-const savedSerial = localStorage.getItem('arc_serial');
-const savedName = localStorage.getItem('arc_name');
-if (savedSerial && savedName) {
-  playerSerial = savedSerial;
-  playerName = savedName;
-  document.getElementById('badge-serial').textContent = playerSerial;
-  const reRegister = document.getElementById('re-register');
-  if (reRegister) {
-      reRegister.textContent = `Not ${playerSerial}? Tap to re-register`;
-      reRegister.addEventListener('click', () => {
-          localStorage.removeItem('arc_serial');
-          localStorage.removeItem('arc_name');
-          window.location.reload();
-      });
-  }
-  showScreen(2);
-} else {
-  showScreen(0);
-}
+(async function init() {
+    try {
+        const res = await fetch('/api/session');
+        if (res.ok) {
+            const data = await res.json();
+            const currentSession = localStorage.getItem('arc_session');
+            if (currentSession !== data.sessionId) {
+                localStorage.removeItem('arc_serial');
+                localStorage.removeItem('arc_name');
+                localStorage.removeItem('arc_session');
+                localStorage.removeItem('pendingWords');
+                localStorage.setItem('arc_session', data.sessionId);
+            }
+        }
+    } catch(e) {}
+
+    const savedSerial = localStorage.getItem('arc_serial');
+    const savedName = localStorage.getItem('arc_name');
+    if (savedSerial && savedName) {
+      playerSerial = savedSerial;
+      playerName = savedName;
+      document.getElementById('badge-serial').textContent = playerSerial;
+      const reRegister = document.getElementById('re-register');
+      if (reRegister) {
+          reRegister.textContent = `Not ${playerSerial}? Tap to re-register`;
+          reRegister.addEventListener('click', () => {
+              localStorage.removeItem('arc_serial');
+              localStorage.removeItem('arc_name');
+              localStorage.removeItem('arc_session');
+              window.location.reload();
+          });
+      }
+      showScreen(2);
+    } else {
+      showScreen(0);
+    }
+})();
 
 // Screen 1: Registration
 const registerForm = document.getElementById('register-form');
@@ -221,9 +239,31 @@ setInterval(async () => {
     saveQueue();
 
     for (const item of currentQueue) {
-        // we won't show retries again, just one shot. 
-        // If it fails again, it goes back to queue inside submitWord.
-        // We set retries to 0 so we don't spam.
         submitWord(item.text, item.id, 0);
     }
+}, 5000);
+
+// Contest State Polling
+let contestWasClosed = false;
+setInterval(async () => {
+    try {
+        const res = await fetch('/api/contest/state');
+        if (res.ok) {
+            const data = await res.json();
+            const msg = document.getElementById('contest-closed-msg');
+            const btn = document.getElementById('word-submit');
+            
+            if (!data.contestOpen) {
+                if (wordInput) wordInput.disabled = true;
+                if (btn) btn.disabled = true;
+                if (msg) msg.style.display = 'block';
+                contestWasClosed = true;
+            } else if (contestWasClosed) {
+                if (wordInput) wordInput.disabled = false;
+                if (btn) btn.disabled = false;
+                if (msg) msg.style.display = 'none';
+                contestWasClosed = false;
+            }
+        }
+    } catch (e) {}
 }, 5000);
