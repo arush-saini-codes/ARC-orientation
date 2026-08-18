@@ -49,12 +49,12 @@ If the server logs `localhost` or you need to check manually:
 - **Frontend:** Vanilla HTML5, CSS3, JS (Canvas API for animations)
 - **Font:** Kalam (Google Fonts)
 
-## Deploying to Railway (recommended for public access)
+## Deploying for Intranet Event (Recommended)
 
-1. Go to railway.app and create a free account
-2. Click New Project → Deploy from GitHub repo
-3. Or use CLI: `npm install -g @railway/cli` → `railway login` → `railway init` → `railway up`
-4. Once deployed, Railway gives a public URL like `https://wordstorm-xyz.railway.app`
-5. Share that URL with students directly or generate a QR from qr-code-generator.com
+1. Connect the host machine to the college intranet network
+2. Verify the machine has the static IP `172.31.3.109`
+3. Double-click `start.bat` to launch the Word-Storm ecosystem
+4. The projector and moderator panels will launch automatically
+5. Students simply scan the generated QR code to connect and submit words
 
-Note: Railway provides persistent storage — SQLite data survives redeploys.
+Note: All data stays local and does not depend on internet access.
